@@ -1,0 +1,22 @@
+{
+  "name": "teenhackshtx-2020",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/realSaddy/teenhackshtx-2020.git"
+  },
+  "author": "Jack P and Katie Y",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/realSaddy/teenhackshtx-2020/issues"
+  },
+  "homepage": "https://github.com/realSaddy/teenhackshtx-2020#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
