@@ -102,7 +102,7 @@ class Index extends React.Component {
                     </CardContent>
                   </CardActionArea>
                   <CardActions>
-                    {v.taker === undefined ? (
+                    {v.taker === undefined && this.Auth.loggedIn() ? (
                       <Button
                         onClick={() => this.claim(v._id)}
                         size="small"
@@ -110,11 +110,12 @@ class Index extends React.Component {
                       >
                         Claim
                       </Button>
-                    ) : (
+                    ) : null}
+                    {v.taker !== undefined ? (
                       <Button size="small" color="secondary">
                         Claimed
                       </Button>
-                    )}
+                    ) : null}
                     <Button
                       onClick={() => history.push("/item?id=" + v._id)}
                       size="small"
