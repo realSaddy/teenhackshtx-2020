@@ -15,12 +15,13 @@ mongoose
   .catch(() => console.log("Error loading mongo!"));
 
 const User = require("./User").User;
+const Item = require("./Item").Item;
 
 module.exports.register = (req, res) => {
   if (req.body.username === undefined)
     return res.status(409).json({ error: "No username provided!" });
   else if (req.body.password === undefined)
-    return res.status(409).json({ error: "No username provided!" });
+    return res.status(409).json({ error: "No password provided!" });
   User.create({
     username: req.body.username,
     password: req.body.password,
@@ -33,7 +34,7 @@ module.exports.login = (req, res) => {
   if (req.body.username === undefined)
     return res.status(409).json({ error: "No username provided!" });
   else if (req.body.password === undefined)
-    return res.status(409).json({ error: "No username provided!" });
+    return res.status(409).json({ error: "No password provided!" });
   User.findOne({ username: req.body.username })
     .then((doc) => doc)
     .then((doc) => {
@@ -52,4 +53,86 @@ module.exports.login = (req, res) => {
       });
     })
     .catch(() => res.status(500).json({ error: "Unable to find user!" }));
+};
+
+module.exports.createItem = (req, res) => {
+  if (req.body.name === undefined)
+    return res.status(409).json({ error: "No name provided!" });
+  jwt.verify(
+    req.header("Authorization"),
+    process.env.SECRET,
+    (err, decoded) => {
+      if (err) return res.status(401).json({ error: "JWT not verified" });
+      User.findOne({ username: decoded.username })
+        .then((doc) => doc)
+        .then((doc) => {
+          Item.create({
+            name: req.body.name,
+            owner: doc._id,
+            description: req.body.description || null,
+          })
+            .then((item) => {
+              doc.owner.push(item._id);
+              doc.save();
+              res.status(201).json({ success: true, id: item._id });
+            })
+            .catch(() =>
+              res.status(500).json({ error: "Error creating item!" })
+            );
+        });
+    }
+  );
+};
+
+module.exports.getItem = (req, res) => {
+  if (req.params.id === undefined)
+    return res.status(409).json({ error: "No id provided!" });
+  Item.findById(req.params.id)
+    .populate("owner")
+    .populate("taker")
+    .then((doc) => doc)
+    .then((doc) => {
+      if (!doc) return res.status(404).json({ error: "No item found!" });
+      else if (doc.taker !== undefined)
+        return res.status(200).json({
+          name: doc.name,
+          owner: doc.owner.username,
+          taker: doc.taker.username,
+        });
+      else
+        return res.status(200).json({
+          name: doc.name,
+          owner: doc.owner.username,
+        });
+    });
+};
+
+module.exports.getPage = (req, res) => {
+  Item.find()
+    .sort({ _id: req.params.id > 0 ? req.params.id * -10 : -1 })
+    .limit(10)
+    .then((doc) => doc)
+    .then((doc) => res.json({ res: doc, success: true }));
+};
+
+module.exports.myItems = (req, res) => {
+  jwt.verify(
+    req.header("Authorization"),
+    process.env.SECRET,
+    (err, decoded) => {
+      if (err) return res.status(401).json({ error: "JWT not verified" });
+      User.findOne({ username: decoded.username })
+        .populate("listedItems")
+        .populate("claimedItems")
+        .then((doc) => doc)
+        .then((doc) => {
+          return res
+            .status(200)
+            .json({
+              listed: doc.listedItems | null,
+              claimed: doc.claimedItems | null,
+            });
+        });
+    }
+  );
 };
