@@ -62,7 +62,7 @@ class RegisterForm extends React.Component {
             name="password"
             id="password"
             label="Password"
-            type="text"
+            type="password"
             onChange={this.handleChange}
             value={this.state.password}
             fullWidth
