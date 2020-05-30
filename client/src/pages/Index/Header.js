@@ -6,6 +6,7 @@ import Typography from "@material-ui/core/Typography";
 import InputBase from "@material-ui/core/InputBase";
 import SearchIcon from "@material-ui/icons/Search";
 import { fade, withStyles } from "@material-ui/core/styles";
+import history from "../../services/history";
 
 const styles = (theme) => ({
   grow: {
@@ -135,7 +136,21 @@ class Header extends React.Component {
               </Button>
             </div>
           ) : (
-            <div>Welcome back {this.props.auth.getProfile().username}</div>
+            <div>
+              <div>Welcome back {this.props.auth.getProfile().username}</div>
+              <div className={classes.section}>
+                <Button
+                  onClick={() => {
+                    this.props.auth.logout();
+                    history.replace("/");
+                  }}
+                  style={{ marginLeft: "auto" }}
+                  color="inherit"
+                >
+                  Logout
+                </Button>
+              </div>
+            </div>
           )}
         </Toolbar>
       </AppBar>

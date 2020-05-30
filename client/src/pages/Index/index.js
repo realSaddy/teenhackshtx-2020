@@ -1,6 +1,5 @@
 import React from "react";
 import axios from "axios";
-import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
 import Header from "./Header";
 import LoginForm from "./LoginForm";
