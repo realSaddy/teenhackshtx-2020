@@ -27,9 +27,6 @@ class Index extends React.Component {
   }
 
   render() {
-    const gridStyle = {
-      alignItems: "stretch",
-    };
     return (
       <React.Fragment>
         <Header />
