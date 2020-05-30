@@ -102,16 +102,20 @@ class Index extends React.Component {
         <Grid justify="space-evenly" container spacing={3}>
           {this.state.items.map((v, i) => {
             return (
-              <Grid key={i} item xs={4}>
+              <Grid style={{ paddingTop: "2%" }} key={i} item md={4} xl={3}>
                 <Card>
                   <CardActionArea>
                     {v.image === undefined ? (
                       <CardMedia
-                        style={{ height: 240, width: "auto" }}
+                        style={{ height: 240, width: "100%" }}
                         image="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse1.mm.bing.net%2Fth%3Fid%3DOIP._n-qAq6XNFrd6xkEiHbdWgHaHa%26pid%3DApi&f=1"
                       />
                     ) : (
-                      <img src={v.image} alt="Image" />
+                      <img
+                        style={{ height: 240, width: "100%" }}
+                        src={v.image}
+                        alt="Image"
+                      />
                     )}
 
                     <CardContent>
