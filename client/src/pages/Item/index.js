@@ -70,7 +70,15 @@ class Item extends React.Component {
           <img alt="The item" src={this.state.image} style={imageStyle} />
         </div>
         <div style={secondStyle}>
-          <h2>Owner: {this.state.owner}</h2>
+          <Button>
+            <h2
+              onClick={() => history.push("/user?id=" + this.state.owner)}
+              style={{ textTransform: "none" }}
+            >
+              Created by {this.state.owner}
+            </h2>
+          </Button>
+          <br />
           {this.state.taker === undefined && this.Auth.loggedIn() ? (
             <Button
               onClick={() => this.claim(this.state._id)}
