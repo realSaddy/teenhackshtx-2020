@@ -147,8 +147,5 @@ module.exports.myItems = (req, res) => {
 module.exports.search = (req, res) => {
   Item.find({ name: { $regex: req.body.search, $options: "i" } })
     .then((docs) => docs)
-    .then((docs) => {
-      console.log(docs);
-      return res.status(200).json({ docs });
-    });
+    .then((docs) => res.status(200).json({ docs }));
 };

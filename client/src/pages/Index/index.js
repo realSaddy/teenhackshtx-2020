@@ -49,6 +49,7 @@ class Index extends React.Component {
   }
 
   search(search) {
+    if (search === "") return;
     axios
       .post("/api/search", {
         search: search,
