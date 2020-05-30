@@ -10,7 +10,6 @@ import history from "../../services/history";
 import LoginForm from "./LoginForm";
 import RegisterForm from "./RegisterForm";
 import CreateItem from "./CreateItem";
-import { ReactSVG } from "react-svg";
 
 const styles = (theme) => ({
   grow: {
