@@ -1,7 +1,5 @@
 import React from "react";
-import axios from "axios";
 import queryString from "query-string";
-import history from "../../services/history";
 import AuthService from "../../services/AuthService";
 
 class Item extends React.Component {
@@ -51,7 +49,7 @@ class Item extends React.Component {
       <React.Fragment>
         <div style={divStyle}>
           <h1>{this.state.name}</h1>
-          <img src={this.state.image} style={imageStyle} />
+          <img alt="The item" src={this.state.image} style={imageStyle} />
         </div>
         <div style={secondStyle}>
           <h2>Owner: {this.state.owner}</h2>

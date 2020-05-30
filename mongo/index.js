@@ -125,6 +125,7 @@ module.exports.getItem = (req, res) => {
         if (
           !err &&
           decoded !== undefined &&
+          doc.taker !== undefined &&
           decoded.username === doc.taker.username
         ) {
           object.phone = doc.owner.phoneNumber;
@@ -145,14 +146,17 @@ module.exports.getPage = (req, res) => {
     .then(function (doc) {
       let arr = [];
       for (let i = 0; i < doc.length; i++) {
-        arr.push({
+        let obj = {
           _id: doc[i]._id,
           name: doc[i].name,
           ownerName: doc[i].owner.username,
           description: doc[i].description,
-          taker: doc[i].taker.username,
           image: doc[i].image,
-        });
+        };
+        if (doc[i].taker !== undefined) {
+          obj.taker = doc[i].taker.username;
+        }
+        arr.push(obj);
       }
       res.json({
         res: arr,

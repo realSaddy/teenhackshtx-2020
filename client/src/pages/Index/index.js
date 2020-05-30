@@ -114,7 +114,7 @@ class Index extends React.Component {
                       <img
                         style={{ height: 240, width: "100%" }}
                         src={v.image}
-                        alt="Image"
+                        alt="The item"
                       />
                     )}
 
