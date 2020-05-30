@@ -81,12 +81,18 @@ class Index extends React.Component {
               <Grid key={i} item xs={4}>
                 <Card>
                   <CardActionArea>
-                    <CardMedia
-                      image={
-                        v["image"] ||
-                        "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse1.mm.bing.net%2Fth%3Fid%3DOIP._n-qAq6XNFrd6xkEiHbdWgHaHa%26pid%3DApi&f=1"
-                      }
-                    />
+                    {v.image === undefined ? (
+                      <CardMedia
+                        style={{ height: 240, width: "auto" }}
+                        image="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse1.mm.bing.net%2Fth%3Fid%3DOIP._n-qAq6XNFrd6xkEiHbdWgHaHa%26pid%3DApi&f=1"
+                      />
+                    ) : (
+                      <CardMedia
+                        style={{ height: 240, width: "auto" }}
+                        image={v.image}
+                      />
+                    )}
+
                     <CardContent>
                       <Typography gutterBottom variant="h5" component="h2">
                         {v.name}
