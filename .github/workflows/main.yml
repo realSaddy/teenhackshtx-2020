@@ -23,6 +23,7 @@ jobs:
           echo "DB_USER=${{ secrets.DB_USER }}" >> .env
           echo "SECRET=${{ secrets.SECRET }}" >> .env
           echo "DB_DB=${{ secrets.DB_DB }}" >> .env
+          echo "DEPLOY=true" >> .env
       - name: Build react
         run: |
           cd client/
