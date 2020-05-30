@@ -98,10 +98,7 @@ class Index extends React.Component {
                         image="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse1.mm.bing.net%2Fth%3Fid%3DOIP._n-qAq6XNFrd6xkEiHbdWgHaHa%26pid%3DApi&f=1"
                       />
                     ) : (
-                      <CardMedia
-                        style={{ height: 240, width: "auto" }}
-                        image={v.image}
-                      />
+                      <img src={v.image} alt="Image" />
                     )}
 
                     <CardContent>

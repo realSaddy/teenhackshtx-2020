@@ -82,6 +82,7 @@ module.exports.createItem = (req, res) => {
             name: req.body.name,
             owner: doc._id,
             description: req.body.description || null,
+            image: req.body.image || null,
           })
             .then((item) => {
               doc.owner = item._id;
@@ -111,11 +112,13 @@ module.exports.getItem = (req, res) => {
           name: doc.name,
           owner: doc.owner.username,
           taker: doc.taker.username,
+          image: doc.image || null,
         });
       else
         return res.status(200).json({
           name: doc.name,
           owner: doc.owner.username,
+          image: doc.image,
         });
     })
     .catch(() => res.status(404).json({ error: "Not found!" }));

@@ -27,6 +27,7 @@ class CreateItem extends React.Component {
     this.state = {};
     this.handleChange = this.handleChange.bind(this);
     this.handleFormSubmit = this.handleFormSubmit.bind(this);
+    this.handleCapture = this.handleCapture.bind(this);
   }
 
   handleFormSubmit(e) {
@@ -46,6 +47,16 @@ class CreateItem extends React.Component {
         if (res.success) history.push("/item?id=" + res.id);
       }
     );
+  }
+
+  handleCapture(target) {
+    let fileReader = new FileReader();
+    fileReader.readAsDataURL(target.target.files[0]);
+    fileReader.onload = (e) => {
+      this.setState({
+        image: e.target.result,
+      });
+    };
   }
 
   handleChange(event) {
@@ -85,6 +96,7 @@ class CreateItem extends React.Component {
             className={classes.input}
             id="image"
             type="file"
+            onChange={this.handleCapture}
           />
           <label htmlFor="image">
             <Button variant="contained" color="primary" component="span">

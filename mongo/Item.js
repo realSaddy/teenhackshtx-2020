@@ -11,7 +11,7 @@ const itemSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
   },
-  image: { data: Buffer, contentType: String },
+  image: { type: String },
   description: { type: String },
 });
 
