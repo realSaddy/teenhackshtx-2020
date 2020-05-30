@@ -129,6 +129,7 @@ module.exports.getItem = (req, res) => {
 module.exports.getPage = (req, res) => {
   Item.find()
     .populate("owner")
+    .populate("taker")
     .sort({ _id: req.params.id > 0 ? req.params.id * -10 : -1 })
     .limit(10)
     .then((doc) => doc)
@@ -140,6 +141,7 @@ module.exports.getPage = (req, res) => {
           name: doc[i].name,
           ownerName: doc[i].owner.username,
           description: doc[i].description,
+          taker: doc[i].taker.username,
           image: doc[i].image,
         });
       }
@@ -184,6 +186,8 @@ module.exports.claim = (req, res) => {
           if (!doc) return res.status(401).json({ error: "No user!" });
           Item.findById(req.body.id)
             .then((item) => {
+              if (item.taker)
+                return res.status(400).json({ error: "Item already claimed!" });
               doc.claimedItems.push(item._id);
               item.taker = doc._id;
               doc.save().then(() => {

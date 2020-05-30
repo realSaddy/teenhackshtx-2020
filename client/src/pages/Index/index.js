@@ -131,13 +131,19 @@ class Index extends React.Component {
                     </CardContent>
                   </CardActionArea>
                   <CardActions>
-                    <Button
-                      onClick={() => this.claim(v._id)}
-                      size="small"
-                      color="primary"
-                    >
-                      Claim
-                    </Button>
+                    {v.taker === undefined ? (
+                      <Button
+                        onClick={() => this.claim(v._id)}
+                        size="small"
+                        color="primary"
+                      >
+                        Claim
+                      </Button>
+                    ) : (
+                      <Button size="small" color="secondary">
+                        Claimed
+                      </Button>
+                    )}
                     <Button
                       onClick={() => history.push("/item?id=" + v._id)}
                       size="small"
