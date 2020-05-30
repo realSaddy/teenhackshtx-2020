@@ -184,7 +184,7 @@ module.exports.claim = (req, res) => {
               doc.claimedItems.push(item._id);
               item.taker = doc._id;
               doc.save().then(() => {
-                item.save().then((ret) => {
+                item.save().then(() => {
                   res.status(200).json({ success: true });
                 });
               });

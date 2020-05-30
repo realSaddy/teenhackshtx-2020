@@ -68,62 +68,58 @@ class User extends React.Component {
           </Grid>
           <Grid item xs={3}>
             <Card style={{ width: "100%" }}>
-              <CardActionArea>
-                <CardContent>
-                  <Typography gutterBottom variant="h5" component="h2">
-                    Listed items:
-                  </Typography>
-                  {this.state.listedItems.map((v, i) => {
-                    return (
-                      <Button
-                        onClick={() => history.push("/item?id=" + v._id)}
-                        key={i}
-                      >
-                        <List>
-                          <ListItemAvatar>
-                            <Avatar src={v.image} />
-                          </ListItemAvatar>
-                          <ListItemText
-                            style={{ textTransform: "none" }}
-                            primary={v.name}
-                            secondary={v.description}
-                          />
-                        </List>
-                      </Button>
-                    );
-                  })}
-                </CardContent>
-              </CardActionArea>
+              <CardContent>
+                <Typography gutterBottom variant="h5" component="h2">
+                  Listed items:
+                </Typography>
+                {this.state.listedItems.map((v, i) => {
+                  return (
+                    <Button
+                      onClick={() => history.push("/item?id=" + v._id)}
+                      key={i}
+                    >
+                      <List>
+                        <ListItemAvatar>
+                          <Avatar src={v.image} />
+                        </ListItemAvatar>
+                        <ListItemText
+                          style={{ textTransform: "none" }}
+                          primary={v.name}
+                          secondary={v.description}
+                        />
+                      </List>
+                    </Button>
+                  );
+                })}
+              </CardContent>
             </Card>
           </Grid>
           <Grid item xs={3}>
             <Card style={{ width: "100%" }}>
-              <CardActionArea>
-                <CardContent>
-                  <Typography gutterBottom variant="h5" component="h2">
-                    Claimed items:
-                  </Typography>
-                  {this.state.claimedItems.map((v, i) => {
-                    return (
-                      <Button
-                        onClick={() => history.push("/item?id=" + v._id)}
-                        key={i}
-                      >
-                        <List>
-                          <ListItemAvatar>
-                            <Avatar src={v.image} />
-                          </ListItemAvatar>
-                          <ListItemText
-                            style={{ textTransform: "none" }}
-                            primary={v.name}
-                            secondary={v.description}
-                          />
-                        </List>
-                      </Button>
-                    );
-                  })}
-                </CardContent>
-              </CardActionArea>
+              <CardContent>
+                <Typography gutterBottom variant="h5" component="h2">
+                  Claimed items:
+                </Typography>
+                {this.state.claimedItems.map((v, i) => {
+                  return (
+                    <Button
+                      onClick={() => history.push("/item?id=" + v._id)}
+                      key={i}
+                    >
+                      <List>
+                        <ListItemAvatar>
+                          <Avatar src={v.image} />
+                        </ListItemAvatar>
+                        <ListItemText
+                          style={{ textTransform: "none" }}
+                          primary={v.name}
+                          secondary={v.description}
+                        />
+                      </List>
+                    </Button>
+                  );
+                })}
+              </CardContent>
             </Card>
           </Grid>
         </Grid>
