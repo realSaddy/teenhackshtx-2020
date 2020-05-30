@@ -119,7 +119,7 @@ class Header extends React.Component {
   render() {
     const { classes } = this.props;
     return (
-      <AppBar position="static" >
+      <AppBar position="static">
         {this.state.enableLoginForm ? (
           <LoginForm auth={this.props.auth} close={this.loginButton} />
         ) : null}
@@ -127,12 +127,11 @@ class Header extends React.Component {
           <RegisterForm auth={this.props.auth} close={this.registerButton} />
         ) : null}
         {this.state.enableCreateForm ? (
-          <CreateItem auth={this.Auth} close={this.createButton} />
+          <CreateItem auth={this.props.Auth} close={this.createButton} />
         ) : null}
-        <Toolbar >
-          <img src={tproll} width="40px"/>
+        <Toolbar>
+          <img alt="Toilet paper role logo" src={tproll} width="40px" />
           <Button onClick={() => history.push("/")} className={classes.title}>
-            
             <Typography className={classes.title} variant="h6">
               Crowdsource Covid
             </Typography>

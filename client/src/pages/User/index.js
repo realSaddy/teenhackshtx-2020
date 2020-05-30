@@ -7,7 +7,6 @@ import history from "../../services/history";
 import {
   Card,
   CardActionArea,
-  CardActions,
   CardContent,
   CardMedia,
   Grid,
