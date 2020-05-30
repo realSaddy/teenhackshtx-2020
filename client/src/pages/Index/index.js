@@ -2,8 +2,6 @@ import React from "react";
 import axios from "axios";
 import Grid from "@material-ui/core/Grid";
 import Header from "./Header";
-import LoginForm from "./LoginForm";
-import RegisterForm from "./RegisterForm";
 import AuthService from "../../services/AuthService";
 import Card from "@material-ui/core/Card";
 import CardActionArea from "@material-ui/core/CardActionArea";
@@ -13,7 +11,6 @@ import Button from "@material-ui/core/Button";
 import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
 import history from "../../services/history";
-import CreateItem from "./CreateItem";
 
 class Index extends React.Component {
   constructor(props) {
@@ -23,9 +20,6 @@ class Index extends React.Component {
       enableLoginForm: false,
       enableRegisterForm: false,
     };
-    this.toggleLoginButton = this.toggleLoginButton.bind(this);
-    this.toggleRegisterButton = this.toggleRegisterButton.bind(this);
-    this.toggleCreateButton = this.toggleCreateButton.bind(this);
     this.claim = this.claim.bind(this);
     this.search = this.search.bind(this);
     this.getPage = this.getPage.bind(this);
@@ -41,18 +35,6 @@ class Index extends React.Component {
       .get("/api/page/" + page)
       .then((res) => this.setState({ items: res.data.res }))
       .catch((e) => console.error(e));
-  }
-
-  toggleLoginButton() {
-    this.setState({ enableLoginForm: !this.state.enableLoginForm });
-  }
-
-  toggleRegisterButton() {
-    this.setState({ enableRegisterForm: !this.state.enableRegisterForm });
-  }
-
-  toggleCreateButton() {
-    this.setState({ enableCreateForm: !this.state.enableCreateForm });
   }
 
   search(search) {
@@ -83,22 +65,7 @@ class Index extends React.Component {
   render() {
     return (
       <React.Fragment>
-        <Header
-          registerButton={this.toggleRegisterButton}
-          loginButton={this.toggleLoginButton}
-          createButton={this.toggleCreateButton}
-          auth={this.Auth}
-          search={this.search}
-        />
-        {this.state.enableLoginForm ? (
-          <LoginForm auth={this.Auth} close={this.toggleLoginButton} />
-        ) : null}
-        {this.state.enableRegisterForm ? (
-          <RegisterForm auth={this.Auth} close={this.toggleRegisterButton} />
-        ) : null}
-        {this.state.enableCreateForm ? (
-          <CreateItem auth={this.Auth} close={this.toggleCreateButton} />
-        ) : null}
+        <Header auth={this.Auth} search={this.search} />
         <Grid justify="space-evenly" container spacing={3}>
           {this.state.items.map((v, i) => {
             return (

@@ -7,6 +7,9 @@ import InputBase from "@material-ui/core/InputBase";
 import SearchIcon from "@material-ui/icons/Search";
 import { fade, withStyles } from "@material-ui/core/styles";
 import history from "../../services/history";
+import LoginForm from "./LoginForm";
+import RegisterForm from "./RegisterForm";
+import CreateItem from "./CreateItem";
 
 const styles = (theme) => ({
   grow: {
@@ -17,6 +20,7 @@ const styles = (theme) => ({
   },
   title: {
     display: "none",
+    color: "white",
     [theme.breakpoints.up("sm")]: {
       display: "block",
     },
@@ -72,9 +76,12 @@ class Header extends React.Component {
     this.handleChange = this.handleChange.bind(this);
     this.handleKeyDown = this.handleKeyDown.bind(this);
     this.triggerChange = this.triggerChange.bind(this);
+    this.loginButton = this.loginButton.bind(this);
+    this.registerButton = this.registerButton.bind(this);
+    this.createButton = this.createButton.bind(this);
   }
 
-  componentWillMount() {
+  componentDidMount() {
     this.timer = null;
   }
 
@@ -91,6 +98,18 @@ class Header extends React.Component {
     }
   }
 
+  loginButton() {
+    this.setState({ enableLoginForm: !this.state.enableLoginForm });
+  }
+
+  registerButton() {
+    this.setState({ enableRegisterForm: !this.state.enableRegisterForm });
+  }
+
+  createButton() {
+    this.setState({ enableCreateForm: !this.state.enableCreateForm });
+  }
+
   triggerChange() {
     this.props.search(this.state.searchText);
   }
@@ -98,25 +117,38 @@ class Header extends React.Component {
     const { classes } = this.props;
     return (
       <AppBar position="static">
+        {this.state.enableLoginForm ? (
+          <LoginForm auth={this.props.auth} close={this.loginButton} />
+        ) : null}
+        {this.state.enableRegisterForm ? (
+          <RegisterForm auth={this.props.auth} close={this.registerButton} />
+        ) : null}
+        {this.state.enableCreateForm ? (
+          <CreateItem auth={this.Auth} close={this.createButton} />
+        ) : null}
         <Toolbar>
-          <Typography className={classes.title} variant="h6">
-            Title Here
-          </Typography>
-          <div className={classes.search}>
-            <div className={classes.searchIcon}>
-              <SearchIcon />
+          <Button onClick={() => history.push("/")} className={classes.title}>
+            <Typography className={classes.title} variant="h6">
+              Title Here
+            </Typography>
+          </Button>
+          {this.props.search !== undefined ? (
+            <div className={classes.search}>
+              <div className={classes.searchIcon}>
+                <SearchIcon />
+              </div>
+              <InputBase
+                classes={{
+                  root: classes.inputRoot,
+                  input: classes.inputInput,
+                }}
+                placeholder="Search…"
+                onChange={this.handleChange}
+                onKeyDown={this.handleKeyDown}
+                value={this.state.searchText}
+              />
             </div>
-            <InputBase
-              classes={{
-                root: classes.inputRoot,
-                input: classes.inputInput,
-              }}
-              placeholder="Search…"
-              onChange={this.handleChange}
-              onKeyDown={this.handleKeyDown}
-              value={this.state.searchText}
-            />
-          </div>
+          ) : null}
           {this.props.auth.loggedIn() ? (
             <div className={classes.section}>
               <Button
@@ -132,14 +164,14 @@ class Header extends React.Component {
           {!this.props.auth.loggedIn() ? (
             <div className={classes.section}>
               <Button
-                onClick={this.props.registerButton}
+                onClick={this.registerButton}
                 style={{ marginLeft: "auto" }}
                 color={"inherit"}
               >
                 Register
               </Button>
               <Button
-                onClick={this.props.loginButton}
+                onClick={this.loginButton}
                 style={{ marginLeft: "auto" }}
                 color="inherit"
               >

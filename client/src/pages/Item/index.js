@@ -1,6 +1,7 @@
 import React from "react";
 import queryString from "query-string";
 import AuthService from "../../services/AuthService";
+import Header from "../Index/Header";
 
 class Item extends React.Component {
   constructor(props) {
@@ -47,6 +48,7 @@ class Item extends React.Component {
 
     return (
       <React.Fragment>
+        <Header auth={this.Auth} />
         <div style={divStyle}>
           <h1>{this.state.name}</h1>
           <img alt="The item" src={this.state.image} style={imageStyle} />
