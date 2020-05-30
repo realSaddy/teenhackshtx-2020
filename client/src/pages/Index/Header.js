@@ -62,6 +62,37 @@ const styles = (theme) => ({
 });
 
 class Header extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      searchText: "",
+    };
+
+    this.handleChange = this.handleChange.bind(this);
+    this.handleKeyDown = this.handleKeyDown.bind(this);
+    this.triggerChange = this.triggerChange.bind(this);
+  }
+
+  componentWillMount() {
+    this.timer = null;
+  }
+
+  handleChange(event) {
+    clearTimeout(this.timer);
+    this.setState({ searchText: event.target.value });
+    this.timer = setTimeout(this.triggerChange, 1000);
+  }
+
+  handleKeyDown(e) {
+    if (e.keyCode === 13) {
+      clearTimeout(this.timer);
+      this.triggerChange();
+    }
+  }
+
+  triggerChange() {
+    this.props.search(this.state.searchText);
+  }
   render() {
     const { classes } = this.props;
     return (
@@ -80,6 +111,9 @@ class Header extends React.Component {
                 input: classes.inputInput,
               }}
               placeholder="Search…"
+              onChange={this.handleChange}
+              onKeyDown={this.handleKeyDown}
+              value={this.state.searchText}
             />
           </div>
           <div className={classes.grow} />

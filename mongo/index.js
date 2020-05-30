@@ -26,7 +26,16 @@ module.exports.register = (req, res) => {
     username: req.body.username,
     password: req.body.password,
   })
-    .then(() => res.status(201).json({ success: true }))
+    .then(() => {
+      let jwtToken = jwt.sign(
+        { username: req.body.username },
+        process.env.SECRET,
+        {
+          expiresIn: "6h",
+        }
+      );
+      res.status(202).send({ token: jwtToken, success: true });
+    })
     .catch(() => res.status(500).json({ error: "Unable to create user!" }));
 };
 
@@ -126,13 +135,20 @@ module.exports.myItems = (req, res) => {
         .populate("claimedItems")
         .then((doc) => doc)
         .then((doc) => {
-          return res
-            .status(200)
-            .json({
-              listed: doc.listedItems | null,
-              claimed: doc.claimedItems | null,
-            });
+          return res.status(200).json({
+            listed: doc.listedItems | null,
+            claimed: doc.claimedItems | null,
+          });
         });
     }
   );
+};
+
+module.exports.search = (req, res) => {
+  Item.find({ name: { $regex: req.body.search, $options: "i" } })
+    .then((docs) => docs)
+    .then((docs) => {
+      console.log(docs);
+      return res.status(200).json({ docs });
+    });
 };

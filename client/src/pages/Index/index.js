@@ -1,4 +1,5 @@
 import React from "react";
+import axios from "axios";
 import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
 import Header from "./Header";
@@ -35,6 +36,7 @@ class Index extends React.Component {
     this.formRow = this.formRow.bind(this);
     this.toggleLoginButton = this.toggleLoginButton.bind(this);
     this.toggleRegisterButton = this.toggleRegisterButton.bind(this);
+    this.search = this.search.bind(this);
     this.Auth = new AuthService();
   }
 
@@ -46,6 +48,17 @@ class Index extends React.Component {
     this.setState({ enableRegisterForm: !this.state.enableRegisterForm });
   }
 
+  search(search) {
+    axios
+      .post("/api/search", {
+        search: search,
+      })
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((e) => console.error(e));
+  }
+
   render() {
     return (
       <React.Fragment>
@@ -53,6 +66,7 @@ class Index extends React.Component {
           registerButton={this.toggleRegisterButton}
           loginButton={this.toggleLoginButton}
           auth={this.Auth}
+          search={this.search}
         />
         {this.state.enableLoginForm ? (
           <LoginForm auth={this.Auth} close={this.toggleLoginButton} />
