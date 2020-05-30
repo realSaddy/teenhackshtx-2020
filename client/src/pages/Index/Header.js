@@ -10,6 +10,7 @@ import history from "../../services/history";
 import LoginForm from "./LoginForm";
 import RegisterForm from "./RegisterForm";
 import CreateItem from "./CreateItem";
+import tproll from "./toilet-paper2white.png";
 
 const styles = (theme) => ({
   grow: {
@@ -118,7 +119,7 @@ class Header extends React.Component {
   render() {
     const { classes } = this.props;
     return (
-      <AppBar position="static">
+      <AppBar position="static" >
         {this.state.enableLoginForm ? (
           <LoginForm auth={this.props.auth} close={this.loginButton} />
         ) : null}
@@ -128,8 +129,10 @@ class Header extends React.Component {
         {this.state.enableCreateForm ? (
           <CreateItem auth={this.Auth} close={this.createButton} />
         ) : null}
-        <Toolbar>
+        <Toolbar >
+          <img src={tproll} width="40px"/>
           <Button onClick={() => history.push("/")} className={classes.title}>
+            
             <Typography className={classes.title} variant="h6">
               Crowdsource Covid
             </Typography>
