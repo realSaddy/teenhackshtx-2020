@@ -1,4 +1,5 @@
 import React from "react";
+import Header from "./Header";
 
 class Index extends React.Component {
   constructor(props) {
@@ -7,7 +8,12 @@ class Index extends React.Component {
   }
 
   render() {
-    return <div className="App">Hello!</div>;
+    return (
+      <div className="App">
+        <Header />
+        Hello!
+      </div>
+    );
   }
 }
 
