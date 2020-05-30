@@ -15,6 +15,7 @@ mongoose
   .catch(() => console.log("Error loading mongo!"));
 
 const User = require("./User").User;
+const Item = require("./Item").Item;
 
 module.exports.register = (req, res) => {
   if (req.body.username === undefined)
@@ -33,7 +34,7 @@ module.exports.login = (req, res) => {
   if (req.body.username === undefined)
     return res.status(409).json({ error: "No username provided!" });
   else if (req.body.password === undefined)
-    return res.status(409).json({ error: "No username provided!" });
+    return res.status(409).json({ error: "No password provided!" });
   User.findOne({ username: req.body.username })
     .then((doc) => doc)
     .then((doc) => {
@@ -52,4 +53,29 @@ module.exports.login = (req, res) => {
       });
     })
     .catch(() => res.status(500).json({ error: "Unable to find user!" }));
+};
+
+module.exports.createItem = (req, res) => {
+  if (req.body.name === undefined)
+    return res.status(409).json({ error: "No name  provided!" });
+  jwt.verify(
+    req.header("Authorization"),
+    process.env.SECRET,
+    (err, decoded) => {
+      if (err) return res.status(401).json({ error: "JWT not verified" });
+      User.findOne({ username: decoded.username })
+        .then((doc) => doc)
+        .then((doc) => {
+          Item.create({
+            name: req.body.name,
+            owner: doc._id,
+            description: req.body.description || null,
+          })
+            .then((doc) => res.status(201).json({ success: true, id: doc._id }))
+            .catch(() =>
+              res.status(500).json({ error: "Error creating item!" })
+            );
+        });
+    }
+  );
 };
