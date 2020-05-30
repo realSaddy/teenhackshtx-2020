@@ -105,7 +105,9 @@ class Index extends React.Component {
                       <Typography gutterBottom variant="h5" component="h2">
                         {v.name}
                       </Typography>
-                      <Typography component="h5">Creator: {v.owner}</Typography>
+                      <Typography component="h5">
+                        Creator: {v.ownerName}
+                      </Typography>
                       <Typography
                         variant="body2"
                         color="textSecondary"

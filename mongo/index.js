@@ -128,10 +128,26 @@ module.exports.getItem = (req, res) => {
 
 module.exports.getPage = (req, res) => {
   Item.find()
+    .populate("owner")
     .sort({ _id: req.params.id > 0 ? req.params.id * -10 : -1 })
     .limit(10)
     .then((doc) => doc)
-    .then((doc) => res.json({ res: doc, success: true }));
+    .then(function (doc) {
+      let arr = [];
+      for (let i = 0; i < doc.length; i++) {
+        arr.push({
+          _id: doc[i]._id,
+          name: doc[i].name,
+          ownerName: doc[i].owner.username,
+          description: doc[i].description,
+          image: doc[i].image,
+        });
+      }
+      res.json({
+        res: arr,
+        success: true,
+      });
+    });
 };
 
 module.exports.myItems = (req, res) => {
