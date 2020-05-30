@@ -48,12 +48,22 @@ class User extends React.Component {
       height: "240px",
       width: "auto",
     };
+    let cardStyle = {
+      padding: "5px",
+      margin: "15px"
+    }
+    let anotherCardStyle = {
+      padding: "5px",
+      width: "100%",
+      margin: "15px"
+
+    }
     return (
       <React.Fragment>
         <Header auth={this.Auth} />
         <Grid justify="space-evenly" container spacing={3}>
           <Grid item xs={3}>
-            <Card>
+            <Card style={cardStyle}>
               <CardActionArea>
                 <CardMedia
                   style={cardMediaStyle}
@@ -68,7 +78,7 @@ class User extends React.Component {
             </Card>
           </Grid>
           <Grid item xs={3}>
-            <Card style={{ width: "100%" }}>
+            <Card style={anotherCardStyle}>
               <CardContent>
                 <Typography gutterBottom variant="h5" component="h2">
                   Listed items:
@@ -79,8 +89,8 @@ class User extends React.Component {
                       onClick={() => history.push("/item?id=" + v._id)}
                       key={i}
                     >
-                      <List>
-                        <ListItemAvatar>
+                      <List style={{height:"100%"}}>
+                        <ListItemAvatar >
                           <Avatar src={v.image} />
                         </ListItemAvatar>
                         <ListItemText
@@ -96,7 +106,7 @@ class User extends React.Component {
             </Card>
           </Grid>
           <Grid item xs={3}>
-            <Card style={{ width: "100%" }}>
+            <Card style={anotherCardStyle}>
               <CardContent>
                 <Typography gutterBottom variant="h5" component="h2">
                   Claimed items:
