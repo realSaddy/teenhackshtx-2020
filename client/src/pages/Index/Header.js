@@ -67,7 +67,6 @@ class Header extends React.Component {
     super(props);
     this.state = {
       searchText: "",
-      loggedIn: false,
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -76,7 +75,6 @@ class Header extends React.Component {
   }
 
   componentWillMount() {
-    if (this.props.auth.loggedIn()) this.setState({ loggedIn: true });
     this.timer = null;
   }
 
@@ -119,7 +117,7 @@ class Header extends React.Component {
               value={this.state.searchText}
             />
           </div>
-          {this.state.loggedIn ? (
+          {this.props.auth.loggedIn() ? (
             <div className={classes.section}>
               <Button
                 onClick={this.props.createButton}

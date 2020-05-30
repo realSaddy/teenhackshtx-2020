@@ -112,13 +112,15 @@ module.exports.getItem = (req, res) => {
           name: doc.name,
           owner: doc.owner.username,
           taker: doc.taker.username,
-          image: doc.image || null,
+          image: doc.image,
+          description: doc.description,
         });
       else
         return res.status(200).json({
           name: doc.name,
           owner: doc.owner.username,
           image: doc.image,
+          description: doc.description,
         });
     })
     .catch(() => res.status(404).json({ error: "Not found!" }));
