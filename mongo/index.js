@@ -85,7 +85,7 @@ module.exports.createItem = (req, res) => {
             image: req.body.image || null,
           })
             .then((item) => {
-              doc.owner = item._id;
+              doc.listedItems.push(item._id);
               doc.save();
               res.status(201).json({ success: true, id: item._id });
             })
@@ -163,26 +163,6 @@ module.exports.getPage = (req, res) => {
         success: true,
       });
     });
-};
-
-module.exports.myItems = (req, res) => {
-  jwt.verify(
-    req.header("Authorization"),
-    process.env.SECRET,
-    (err, decoded) => {
-      if (err) return res.status(401).json({ error: "JWT not verified" });
-      User.findOne({ username: decoded.username })
-        .populate("listedItems")
-        .populate("claimedItems")
-        .then((doc) => doc)
-        .then((doc) => {
-          return res.status(200).json({
-            listed: doc.listedItems | null,
-            claimed: doc.claimedItems | null,
-          });
-        });
-    }
-  );
 };
 
 module.exports.claim = (req, res) => {
