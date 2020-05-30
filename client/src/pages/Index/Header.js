@@ -20,6 +20,8 @@ const styles = (theme) => ({
     [theme.breakpoints.up("sm")]: {
       display: "block",
     },
+    textTransform: "uppercase", 
+    fontSize: "15px"
   },
   search: {
     position: "relative",
@@ -100,7 +102,7 @@ class Header extends React.Component {
       <AppBar position="static">
         <Toolbar>
           <Typography className={classes.title} variant="h6">
-            Title Here
+            Crowdsource Covid
           </Typography>
           <div className={classes.search}>
             <div className={classes.searchIcon}>
