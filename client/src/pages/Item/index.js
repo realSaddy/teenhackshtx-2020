@@ -1,6 +1,9 @@
 import React from "react";
 import queryString from "query-string";
 import AuthService from "../../services/AuthService";
+import Header from "../Index/Header";
+import Button from "@material-ui/core/Button";
+import history from "../../services/history";
 
 class Item extends React.Component {
   constructor(props) {
@@ -13,6 +16,7 @@ class Item extends React.Component {
       image:
         "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fcdn1.iconfinder.com%2Fdata%2Ficons%2Frounded-flat-country-flag-collection-1%2F2000%2F_Unknown.png&f=1&nofb=1",
     };
+    this.claim = this.claim.bind(this);
     this.Auth = new AuthService();
   }
 
@@ -23,6 +27,19 @@ class Item extends React.Component {
       (res) => {
         this.setState(res);
       }
+    );
+  }
+
+  claim(id) {
+    this.Auth.fetch(
+      "/api/claim",
+      {
+        method: "POST",
+        body: JSON.stringify({
+          id: id,
+        }),
+      },
+      () => history.push("/item?id=" + id)
     );
   }
 
@@ -47,17 +64,27 @@ class Item extends React.Component {
 
     return (
       <React.Fragment>
+        <Header auth={this.Auth} />
         <div style={divStyle}>
           <h1>{this.state.name}</h1>
           <img alt="The item" src={this.state.image} style={imageStyle} />
         </div>
         <div style={secondStyle}>
           <h2>Owner: {this.state.owner}</h2>
-          {this.state.taker === undefined ? (
-            <button style={buttonStyle}>Claim</button>
-          ) : (
-            <button style={buttonStyle}>Claimed by {this.state.taker}</button>
-          )}
+          {this.state.taker === undefined && this.Auth.loggedIn() ? (
+            <Button
+              onClick={() => this.claim(this.state._id)}
+              size="small"
+              color="primary"
+            >
+              Claim
+            </Button>
+          ) : null}
+          {this.state.taker !== undefined ? (
+            <Button size="small" color="secondary">
+              Claimed
+            </Button>
+          ) : null}
           {this.state.phone !== undefined ? (
             <button style={buttonStyle}>
               Phone number:{" "}
