@@ -114,3 +114,25 @@ module.exports.getPage = (req, res) => {
     .then((doc) => doc)
     .then((doc) => res.json({ res: doc, success: true }));
 };
+
+module.exports.myItems = (req, res) => {
+  jwt.verify(
+    req.header("Authorization"),
+    process.env.SECRET,
+    (err, decoded) => {
+      if (err) return res.status(401).json({ error: "JWT not verified" });
+      User.findOne({ username: decoded.username })
+        .populate("listedItems")
+        .populate("claimedItems")
+        .then((doc) => doc)
+        .then((doc) => {
+          return res
+            .status(200)
+            .json({
+              listed: doc.listedItems | null,
+              claimed: doc.claimedItems | null,
+            });
+        });
+    }
+  );
+};
