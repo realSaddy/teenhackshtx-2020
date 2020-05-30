@@ -106,3 +106,11 @@ module.exports.getItem = (req, res) => {
         });
     });
 };
+
+module.exports.getPage = (req, res) => {
+  Item.find()
+    .sort({ _id: req.params.id > 0 ? req.params.id * -10 : -1 })
+    .limit(10)
+    .then((doc) => doc)
+    .then((doc) => res.json({ res: doc, success: true }));
+};
