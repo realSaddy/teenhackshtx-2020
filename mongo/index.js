@@ -105,23 +105,32 @@ module.exports.getItem = (req, res) => {
     .populate("owner")
     .populate("taker")
     .then((doc) => doc)
-    .then((doc) => {
+    .then(async (doc) => {
       if (!doc) return res.status(404).json({ error: "No item found!" });
-      else if (doc.taker !== undefined)
-        return res.status(200).json({
-          name: doc.name,
-          owner: doc.owner.username,
-          taker: doc.taker.username,
-          image: doc.image,
-          description: doc.description,
-        });
-      else
-        return res.status(200).json({
-          name: doc.name,
-          owner: doc.owner.username,
-          image: doc.image,
-          description: doc.description,
-        });
+      let object = {
+        name: doc.name,
+        owner: doc.owner.username,
+        image: doc.image,
+        description: doc.description,
+      };
+      if (doc.taker !== undefined) {
+        object.taker = doc.taker.username;
+      }
+      if (req.header("Authorization")) {
+        let err,
+          decoded = await jwt.verify(
+            req.header("Authorization"),
+            process.env.SECRET
+          );
+        if (
+          !err &&
+          decoded !== undefined &&
+          decoded.username === doc.taker.username
+        ) {
+          object.phone = doc.owner.phoneNumber;
+        }
+      }
+      return res.status(200).json(object);
     })
     .catch(() => res.status(404).json({ error: "Not found!" }));
 };

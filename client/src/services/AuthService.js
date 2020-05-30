@@ -68,7 +68,7 @@ export default class AuthService {
   }
 
   _checkStatus(response) {
-    if (response.status >= 200 && response.status < 300) {
+    if (response.status >= 200 && response.status < 408) {
       return response;
     } else {
       let error = new Error(response.statusText);

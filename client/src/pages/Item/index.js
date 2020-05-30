@@ -2,6 +2,7 @@ import React from "react";
 import axios from "axios";
 import queryString from "query-string";
 import history from "../../services/history";
+import AuthService from "../../services/AuthService";
 
 class Item extends React.Component {
   constructor(props) {
@@ -14,17 +15,17 @@ class Item extends React.Component {
       image:
         "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fcdn1.iconfinder.com%2Fdata%2Ficons%2Frounded-flat-country-flag-collection-1%2F2000%2F_Unknown.png&f=1&nofb=1",
     };
+    this.Auth = new AuthService();
   }
 
   componentDidMount() {
-    axios
-      .get("/api/item/" + queryString.parse(this.props.location.search).id)
-      .then((res) => {
-        this.setState(res.data);
-      })
-      .catch(() => {
-        history.push("/404");
-      });
+    this.Auth.fetch(
+      "/api/item/" + queryString.parse(this.props.location.search).id,
+      {},
+      (res) => {
+        this.setState(res);
+      }
+    );
   }
 
   render() {
@@ -54,9 +55,17 @@ class Item extends React.Component {
         </div>
         <div style={secondStyle}>
           <h2>Owner: {this.state.owner}</h2>
-          <button style={buttonStyle}>Claim</button>
-          <button style={buttonStyle}>Contact Owner</button>
-
+          {this.state.taker === undefined ? (
+            <button style={buttonStyle}>Claim</button>
+          ) : (
+            <button style={buttonStyle}>Claimed by {this.state.taker}</button>
+          )}
+          {this.state.phone !== undefined ? (
+            <button style={buttonStyle}>
+              Phone number:{" "}
+              {this.state.phone.replace(/(\d{3})(\d{3})(\d{4})/, "($1) $2-$3")}
+            </button>
+          ) : null}
           <p>{this.state.description}</p>
         </div>
       </React.Fragment>
