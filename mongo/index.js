@@ -22,9 +22,12 @@ module.exports.register = (req, res) => {
     return res.status(409).json({ error: "No username provided!" });
   else if (req.body.password === undefined)
     return res.status(409).json({ error: "No password provided!" });
+  else if (req.body.phoneNumber === undefined)
+    return res.status(409).json({ error: "No phone number provided! " });
   User.create({
     username: req.body.username,
     password: req.body.password,
+    phoneNumber: req.body.phoneNumber,
   })
     .then(() => {
       let jwtToken = jwt.sign(

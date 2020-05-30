@@ -5,6 +5,7 @@ const SALT_WORK_FACTOR = 10;
 const userSchema = new mongoose.Schema({
   username: { type: String, unique: true, required: true },
   password: { type: String, required: true },
+  phoneNumber: { type: String, unique: true, required: true },
   listedItems: [
     {
       type: mongoose.Schema.Types.ObjectId,

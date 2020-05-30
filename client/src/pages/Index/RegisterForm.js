@@ -8,13 +8,15 @@ import TextField from "@material-ui/core/TextField";
 import DialogActions from "@material-ui/core/DialogActions";
 import Button from "@material-ui/core/Button";
 import history from "../../services/history";
+import NumberFormat from "react-number-format";
 
 class RegisterForm extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { username: "", password: "" };
+    this.state = { username: "", password: "", phoneNumber: "" };
     this.handleChange = this.handleChange.bind(this);
     this.handleFormSubmit = this.handleFormSubmit.bind(this);
+    this.NumberFormatCustom = this.NumberFormatCustom.bind(this);
   }
 
   handleFormSubmit(e) {
@@ -23,13 +25,14 @@ class RegisterForm extends React.Component {
       .post(`/api/register`, {
         username: this.state.username,
         password: this.state.password,
+        phoneNumber: this.state.phoneNumber,
       })
       .then((res) => {
         this.props.auth.setToken(res.data.token);
       })
       .catch((e) => console.error(e));
     this.props.close();
-    history.replace("/");
+    history.push("/");
   }
 
   componentDidMount() {
@@ -38,6 +41,27 @@ class RegisterForm extends React.Component {
 
   handleChange(event) {
     this.setState({ [event.target.name]: event.target.value });
+  }
+
+  NumberFormatCustom(props) {
+    const { inputRef, onChange, ...other } = props;
+
+    return (
+      <NumberFormat
+        {...other}
+        getInputRef={inputRef}
+        onValueChange={(values) => {
+          onChange({
+            target: {
+              name: props.name,
+              value: values.value,
+            },
+          });
+        }}
+        format="(###) ###-####"
+        isNumericString
+      />
+    );
   }
 
   render() {
@@ -66,6 +90,19 @@ class RegisterForm extends React.Component {
             onChange={this.handleChange}
             value={this.state.password}
             fullWidth
+          />
+          <TextField
+            margin="dense"
+            name="phoneNumber"
+            id="phoneNumber"
+            label="Phone Number"
+            type="text"
+            onChange={this.handleChange}
+            value={this.state.phoneNumber}
+            fullWidth
+            InputProps={{
+              inputComponent: this.NumberFormatCustom,
+            }}
           />
         </DialogContent>
         <DialogActions>
