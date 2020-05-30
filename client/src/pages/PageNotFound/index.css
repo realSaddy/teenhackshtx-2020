@@ -78,7 +78,7 @@
     font-weight: 400;
   }
   
-  .notfound a {
+  .notfound span {
     font-family: Helvetica, sans-serif;
     display: inline-block;
     font-weight: 700;
@@ -98,4 +98,3 @@
       padding-top: 110px;
     }
   }
-  

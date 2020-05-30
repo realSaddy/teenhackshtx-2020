@@ -20,12 +20,10 @@ class Item extends React.Component {
     axios
       .get("/api/item/" + queryString.parse(this.props.location.search).id)
       .then((res) => {
-        console.log(res.data);
         this.setState(res.data);
       })
-      .catch((err) => {
-        console.error(err);
-        history.push("/");
+      .catch(() => {
+        history.push("/404");
       });
   }
 
