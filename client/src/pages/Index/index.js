@@ -52,6 +52,7 @@ class Index extends React.Component {
         <Header
           registerButton={this.toggleRegisterButton}
           loginButton={this.toggleLoginButton}
+          auth={this.Auth}
         />
         {this.state.enableLoginForm ? (
           <LoginForm auth={this.Auth} close={this.toggleLoginButton} />

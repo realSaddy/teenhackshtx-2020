@@ -83,22 +83,26 @@ class Header extends React.Component {
             />
           </div>
           <div className={classes.grow} />
-          <div className={classes.section}>
-            <Button
-              onClick={this.props.registerButton}
-              style={{ marginLeft: "auto" }}
-              color={"inherit"}
-            >
-              Register
-            </Button>
-            <Button
-              onClick={this.props.loginButton}
-              style={{ marginLeft: "auto" }}
-              color="inherit"
-            >
-              Login
-            </Button>
-          </div>
+          {!this.props.auth.loggedIn() ? (
+            <div className={classes.section}>
+              <Button
+                onClick={this.props.registerButton}
+                style={{ marginLeft: "auto" }}
+                color={"inherit"}
+              >
+                Register
+              </Button>
+              <Button
+                onClick={this.props.loginButton}
+                style={{ marginLeft: "auto" }}
+                color="inherit"
+              >
+                Login
+              </Button>
+            </div>
+          ) : (
+            <div>Welcome back {this.props.auth.getProfile().username}</div>
+          )}
         </Toolbar>
       </AppBar>
     );
