@@ -127,7 +127,7 @@ class Header extends React.Component {
           <RegisterForm auth={this.props.auth} close={this.registerButton} />
         ) : null}
         {this.state.enableCreateForm ? (
-          <CreateItem auth={this.props.Auth} close={this.createButton} />
+          <CreateItem auth={this.props.auth} close={this.createButton} />
         ) : null}
         <Toolbar>
           <img alt="Toilet paper role logo" src={tproll} width="40px" />
