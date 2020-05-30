@@ -182,9 +182,18 @@ class Header extends React.Component {
             </div>
           ) : (
             <div className={classes.section}>
-              <Typography className={classes.title} variant="h6">
-                Welcome back {this.props.auth.getProfile().username}
-              </Typography>
+              <Button
+                onClick={() =>
+                  history.push(
+                    "/user?id=" + this.props.auth.getProfile().username
+                  )
+                }
+                className={classes.title}
+              >
+                <Typography className={classes.title} variant="h6">
+                  Welcome back {this.props.auth.getProfile().username}
+                </Typography>
+              </Button>
               <Button
                 onClick={() => {
                   this.props.auth.logout();

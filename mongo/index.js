@@ -215,6 +215,25 @@ module.exports.claim = (req, res) => {
   );
 };
 
+module.exports.getUser = (req, res) => {
+  if (req.params.id === undefined)
+    return res.status(409).json({ error: "No id provided!" });
+  User.findOne({ username: req.params.id })
+    .populate("listedItems")
+    .populate("claimedItems")
+    .then((doc) => doc)
+    .then((doc) => {
+      if (!doc) return res.status(404).json({ error: "No user!" });
+      res.status(200).json({
+        username: doc.username,
+        phone: doc.phoneNumber,
+        listedItems: doc.listedItems,
+        claimedItems: doc.claimedItems,
+      });
+    })
+    .catch(() => res.status(500).json({ error: "Server error" }));
+};
+
 module.exports.search = (req, res) => {
   Item.find({ name: { $regex: req.body.search, $options: "i" } })
     .then((docs) => docs)
