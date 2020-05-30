@@ -116,7 +116,8 @@ module.exports.getItem = (req, res) => {
           name: doc.name,
           owner: doc.owner.username,
         });
-    });
+    })
+    .catch(() => res.status(404).json({ error: "Not found!" }));
 };
 
 module.exports.getPage = (req, res) => {

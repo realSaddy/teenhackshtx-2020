@@ -12,6 +12,7 @@ import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
+import history from "../../services/history";
 
 class Index extends React.Component {
   constructor(props) {
@@ -108,9 +109,13 @@ class Index extends React.Component {
                   </CardActionArea>
                   <CardActions>
                     <Button size="small" color="primary">
-                      Share
+                      Claim
                     </Button>
-                    <Button size="small" color="primary">
+                    <Button
+                      onClick={() => history.push("/item?id=" + v._id)}
+                      size="small"
+                      color="primary"
+                    >
                       Learn More
                     </Button>
                   </CardActions>

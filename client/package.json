@@ -12,6 +12,7 @@
     "history": "^4.10.1",
     "jwt-decode": "^2.2.0",
     "pretty-quick": "^2.0.1",
+    "query-string": "^6.12.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-number-format": "^4.4.1",
