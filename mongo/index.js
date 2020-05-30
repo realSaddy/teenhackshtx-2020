@@ -170,6 +170,34 @@ module.exports.myItems = (req, res) => {
   );
 };
 
+module.exports.claim = (req, res) => {
+  if (req.body.id === undefined)
+    return res.status(409).json({ error: "No id provided!" });
+  jwt.verify(
+    req.header("Authorization"),
+    process.env.SECRET,
+    (err, decoded) => {
+      if (err) return res.status(401).json({ error: "JWT not verified" });
+      User.findOne({ username: decoded.username })
+        .then((doc) => doc)
+        .then((doc) => {
+          if (!doc) return res.status(401).json({ error: "No user!" });
+          Item.findById(req.body.id)
+            .then((item) => {
+              doc.claimedItems.push(item._id);
+              item.taker = doc._id;
+              doc.save().then(() => {
+                item.save().then((ret) => {
+                  res.status(200).json({ success: true });
+                });
+              });
+            })
+            .catch(() => res.status(404).json({ error: "Item not found!" }));
+        });
+    }
+  );
+};
+
 module.exports.search = (req, res) => {
   Item.find({ name: { $regex: req.body.search, $options: "i" } })
     .then((docs) => docs)

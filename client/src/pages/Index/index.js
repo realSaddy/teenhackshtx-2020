@@ -26,7 +26,7 @@ class Index extends React.Component {
     this.toggleLoginButton = this.toggleLoginButton.bind(this);
     this.toggleRegisterButton = this.toggleRegisterButton.bind(this);
     this.toggleCreateButton = this.toggleCreateButton.bind(this);
-
+    this.claim = this.claim.bind(this);
     this.search = this.search.bind(this);
     this.getPage = this.getPage.bind(this);
     this.Auth = new AuthService();
@@ -65,6 +65,19 @@ class Index extends React.Component {
         this.setState({ items: res.data.docs });
       })
       .catch((e) => console.error(e));
+  }
+
+  claim(id) {
+    this.Auth.fetch(
+      "/api/claim",
+      {
+        method: "POST",
+        body: JSON.stringify({
+          id: id,
+        }),
+      },
+      () => history.push("/item?id=" + id)
+    );
   }
 
   render() {
@@ -118,7 +131,11 @@ class Index extends React.Component {
                     </CardContent>
                   </CardActionArea>
                   <CardActions>
-                    <Button size="small" color="primary">
+                    <Button
+                      onClick={() => this.claim(v._id)}
+                      size="small"
+                      color="primary"
+                    >
                       Claim
                     </Button>
                     <Button
