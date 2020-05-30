@@ -85,7 +85,7 @@ class Header extends React.Component {
           <div className={classes.grow} />
           <div className={classes.section}>
             <Button
-              onClick={this.props.register}
+              onClick={this.props.registerButton}
               style={{ marginLeft: "auto" }}
               color={"inherit"}
             >

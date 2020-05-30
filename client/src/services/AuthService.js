@@ -7,9 +7,9 @@ export default class AuthService {
     this.getProfile = this.getProfile.bind(this);
   }
 
-  login(token, pin) {
+  login(username, password) {
     return axios
-      .post(`/api/login`, { token, pin })
+      .post(`/api/login`, { username, password })
       .then((res) => {
         this.setToken(res.data.token);
       })
