@@ -154,7 +154,7 @@ class Header extends React.Component {
           {this.props.auth.loggedIn() ? (
             <div className={classes.section}>
               <Button
-                onClick={this.props.createButton}
+                onClick={this.createButton}
                 style={{ marginRight: "auto" }}
                 color={"inherit"}
               >
