@@ -29,6 +29,7 @@ class RegisterForm extends React.Component {
       })
       .then((res) => {
         this.props.auth.setToken(res.data.token);
+        history.push("/");
       })
       .catch((e) => console.error(e));
     this.props.close();
