@@ -75,15 +75,21 @@ class User extends React.Component {
                   </Typography>
                   {this.state.listedItems.map((v, i) => {
                     return (
-                      <List key={i}>
-                        <ListItemAvatar>
-                          <Avatar src={v.image} />
-                        </ListItemAvatar>
-                        <ListItemText
-                          primary={v.name}
-                          secondary={v.description}
-                        />
-                      </List>
+                      <Button
+                        onClick={() => history.push("/item?id=" + v._id)}
+                        key={i}
+                      >
+                        <List>
+                          <ListItemAvatar>
+                            <Avatar src={v.image} />
+                          </ListItemAvatar>
+                          <ListItemText
+                            style={{ textTransform: "none" }}
+                            primary={v.name}
+                            secondary={v.description}
+                          />
+                        </List>
+                      </Button>
                     );
                   })}
                 </CardContent>
