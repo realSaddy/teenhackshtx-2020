@@ -10,6 +10,7 @@ import history from "../../services/history";
 import LoginForm from "./LoginForm";
 import RegisterForm from "./RegisterForm";
 import CreateItem from "./CreateItem";
+import { ReactSVG } from "react-svg";
 
 const styles = (theme) => ({
   grow: {
@@ -24,8 +25,8 @@ const styles = (theme) => ({
     [theme.breakpoints.up("sm")]: {
       display: "block",
     },
-    textTransform: "uppercase", 
-    fontSize: "15px"
+    textTransform: "none",
+    fontSize: "15px",
   },
   search: {
     position: "relative",
@@ -131,7 +132,7 @@ class Header extends React.Component {
         <Toolbar>
           <Button onClick={() => history.push("/")} className={classes.title}>
             <Typography className={classes.title} variant="h6">
-              Title Here
+              Crowdsource Covid
             </Typography>
           </Button>
           {this.props.search !== undefined ? (
