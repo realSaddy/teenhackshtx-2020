@@ -71,7 +71,11 @@ module.exports.createItem = (req, res) => {
             owner: doc._id,
             description: req.body.description || null,
           })
-            .then((doc) => res.status(201).json({ success: true, id: doc._id }))
+            .then((item) => {
+              doc.owner.push(item._id);
+              doc.save();
+              res.status(201).json({ success: true, id: item._id });
+            })
             .catch(() =>
               res.status(500).json({ error: "Error creating item!" })
             );
