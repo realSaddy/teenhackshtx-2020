@@ -108,6 +108,7 @@ module.exports.getItem = (req, res) => {
     .then(async (doc) => {
       if (!doc) return res.status(404).json({ error: "No item found!" });
       let object = {
+        _id: doc._id,
         name: doc.name,
         owner: doc.owner.username,
         image: doc.image,

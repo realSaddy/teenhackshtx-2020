@@ -17,10 +17,15 @@ class Item extends React.Component {
         "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fcdn1.iconfinder.com%2Fdata%2Ficons%2Frounded-flat-country-flag-collection-1%2F2000%2F_Unknown.png&f=1&nofb=1",
     };
     this.claim = this.claim.bind(this);
+    this.getInfo = this.getInfo.bind(this);
     this.Auth = new AuthService();
   }
 
   componentDidMount() {
+    this.getInfo();
+  }
+
+  getInfo() {
     this.Auth.fetch(
       "/api/item/" + queryString.parse(this.props.location.search).id,
       {},
@@ -39,7 +44,7 @@ class Item extends React.Component {
           id: id,
         }),
       },
-      () => history.push("/item?id=" + id)
+      () => this.getInfo()
     );
   }
 
