@@ -67,6 +67,7 @@ class Header extends React.Component {
     super(props);
     this.state = {
       searchText: "",
+      loggedIn: false,
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -75,6 +76,7 @@ class Header extends React.Component {
   }
 
   componentWillMount() {
+    if (this.props.auth.loggedIn()) this.setState({ loggedIn: true });
     this.timer = null;
   }
 
@@ -117,6 +119,17 @@ class Header extends React.Component {
               value={this.state.searchText}
             />
           </div>
+          {this.state.loggedIn ? (
+            <div className={classes.section}>
+              <Button
+                onClick={this.props.createButton}
+                style={{ marginRight: "auto" }}
+                color={"inherit"}
+              >
+                Create
+              </Button>
+            </div>
+          ) : null}
           <div className={classes.grow} />
           {!this.props.auth.loggedIn() ? (
             <div className={classes.section}>
@@ -136,20 +149,20 @@ class Header extends React.Component {
               </Button>
             </div>
           ) : (
-            <div>
-              <div>Welcome back {this.props.auth.getProfile().username}</div>
-              <div className={classes.section}>
-                <Button
-                  onClick={() => {
-                    this.props.auth.logout();
-                    history.replace("/");
-                  }}
-                  style={{ marginLeft: "auto" }}
-                  color="inherit"
-                >
-                  Logout
-                </Button>
-              </div>
+            <div className={classes.section}>
+              <Typography className={classes.title} variant="h6">
+                Welcome back {this.props.auth.getProfile().username}
+              </Typography>
+              <Button
+                onClick={() => {
+                  this.props.auth.logout();
+                  history.replace("/");
+                }}
+                style={{ marginLeft: "auto" }}
+                color="inherit"
+              >
+                Logout
+              </Button>
             </div>
           )}
         </Toolbar>

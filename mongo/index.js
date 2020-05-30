@@ -84,13 +84,14 @@ module.exports.createItem = (req, res) => {
             description: req.body.description || null,
           })
             .then((item) => {
-              doc.owner.push(item._id);
+              doc.owner = item._id;
               doc.save();
               res.status(201).json({ success: true, id: item._id });
             })
-            .catch(() =>
-              res.status(500).json({ error: "Error creating item!" })
-            );
+            .catch((err) => {
+              console.error(err);
+              res.status(500).json({ error: "Error creating item!" });
+            });
         });
     }
   );

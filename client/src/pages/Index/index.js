@@ -13,6 +13,7 @@ import Button from "@material-ui/core/Button";
 import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
 import history from "../../services/history";
+import CreateItem from "./CreateItem";
 
 class Index extends React.Component {
   constructor(props) {
@@ -24,6 +25,8 @@ class Index extends React.Component {
     };
     this.toggleLoginButton = this.toggleLoginButton.bind(this);
     this.toggleRegisterButton = this.toggleRegisterButton.bind(this);
+    this.toggleCreateButton = this.toggleCreateButton.bind(this);
+
     this.search = this.search.bind(this);
     this.getPage = this.getPage.bind(this);
     this.Auth = new AuthService();
@@ -48,6 +51,10 @@ class Index extends React.Component {
     this.setState({ enableRegisterForm: !this.state.enableRegisterForm });
   }
 
+  toggleCreateButton() {
+    this.setState({ enableCreateForm: !this.state.enableCreateForm });
+  }
+
   search(search) {
     if (search === "") return this.getPage(0);
     axios
@@ -66,6 +73,7 @@ class Index extends React.Component {
         <Header
           registerButton={this.toggleRegisterButton}
           loginButton={this.toggleLoginButton}
+          createButton={this.toggleCreateButton}
           auth={this.Auth}
           search={this.search}
         />
@@ -74,6 +82,9 @@ class Index extends React.Component {
         ) : null}
         {this.state.enableRegisterForm ? (
           <RegisterForm auth={this.Auth} close={this.toggleRegisterButton} />
+        ) : null}
+        {this.state.enableCreateForm ? (
+          <CreateItem auth={this.Auth} close={this.toggleCreateButton} />
         ) : null}
         <Grid justify="space-evenly" container spacing={3}>
           {this.state.items.map((v, i) => {
